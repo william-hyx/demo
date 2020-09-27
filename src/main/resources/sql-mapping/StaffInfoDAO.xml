@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.StaffInfoDAO">
+  <resultMap id="BaseResultMap" type="com.example.demo.po.StaffInfo">
+    <id column="sid" jdbcType="BIGINT" property="sid" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="staff_name" jdbcType="VARCHAR" property="staffName" />
+    <result column="staff_phone" jdbcType="VARCHAR" property="staffPhone" />
+    <result column="staff_email" jdbcType="VARCHAR" property="staffEmail" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="alias_name" jdbcType="VARCHAR" property="aliasName" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="gender" jdbcType="SMALLINT" property="gender" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    sid, uid, staff_name, staff_phone, staff_email, nick_name, alias_name, avatar,
+    gender, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from staff_info
+    where sid = #{sid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from staff_info
+    where sid = #{sid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.po.StaffInfo">
+    insert into staff_info (sid, uid, staff_name,
+      staff_phone, staff_email, nick_name, 
+      alias_name, avatar, gender, 
+      create_time, update_time)
+    values (#{sid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{staffName,jdbcType=VARCHAR}, 
+      #{staffPhone,jdbcType=VARCHAR}, #{staffEmail,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{aliasName,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{gender,jdbcType=SMALLINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.po.StaffInfo">
+    insert into staff_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        sid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="staffName != null">
+        staff_name,
+      </if>
+      <if test="staffPhone != null">
+        staff_phone,
+      </if>
+      <if test="staffEmail != null">
+        staff_email,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="aliasName != null">
+        alias_name,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="gender != null">
+        gender,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="sid != null">
+        #{sid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="staffName != null">
+        #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffPhone != null">
+        #{staffPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="staffEmail != null">
+        #{staffEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="aliasName != null">
+        #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        #{gender,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.po.StaffInfo">
+    update staff_info
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="staffName != null">
+        staff_name = #{staffName,jdbcType=VARCHAR},
+      </if>
+      <if test="staffPhone != null">
+        staff_phone = #{staffPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="staffEmail != null">
+        staff_email = #{staffEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="aliasName != null">
+        alias_name = #{aliasName,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="gender != null">
+        gender = #{gender,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where sid = #{sid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.po.StaffInfo">
+    update staff_info
+    set uid = #{uid,jdbcType=BIGINT},
+      staff_name = #{staffName,jdbcType=VARCHAR},
+      staff_phone = #{staffPhone,jdbcType=VARCHAR},
+      staff_email = #{staffEmail,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      alias_name = #{aliasName,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      gender = #{gender,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where sid = #{sid,jdbcType=BIGINT}
+  </update>
+</mapper>

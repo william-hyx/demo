@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.AccountUserDAO">
+  <resultMap id="BaseResultMap" type="com.example.demo.po.AccountUser">
+    <id column="uid" jdbcType="BIGINT" property="uid" />
+    <id column="user_name" jdbcType="VARCHAR" property="userName" />
+    <id column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="user_email" jdbcType="VARCHAR" property="userEmail" />
+    <result column="user_pwd" jdbcType="VARCHAR" property="userPwd" />
+    <result column="pwd_salt" jdbcType="VARCHAR" property="pwdSalt" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_ip" jdbcType="VARCHAR" property="createIp" />
+    <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
+    <result column="last_login_ip" jdbcType="VARCHAR" property="lastLoginIp" />
+    <result column="login_times" jdbcType="BIGINT" property="loginTimes" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    uid, user_name, user_phone, user_email, user_pwd, pwd_salt, create_time, create_ip,
+    last_login_time, last_login_ip, login_times, status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="com.example.demo.po.AccountUserKey" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account_user
+    where uid = #{uid,jdbcType=BIGINT}
+      and user_name = #{userName,jdbcType=VARCHAR}
+      and user_phone = #{userPhone,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="com.example.demo.po.AccountUserKey">
+    delete from account_user
+    where uid = #{uid,jdbcType=BIGINT}
+      and user_name = #{userName,jdbcType=VARCHAR}
+      and user_phone = #{userPhone,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.po.AccountUser">
+    insert into account_user (uid, user_name, user_phone,
+      user_email, user_pwd, pwd_salt, 
+      create_time, create_ip, last_login_time, 
+      last_login_ip, login_times, status
+      )
+    values (#{uid,jdbcType=BIGINT}, #{userName,jdbcType=VARCHAR}, #{userPhone,jdbcType=VARCHAR}, 
+      #{userEmail,jdbcType=VARCHAR}, #{userPwd,jdbcType=VARCHAR}, #{pwdSalt,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createIp,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{lastLoginIp,jdbcType=VARCHAR}, #{loginTimes,jdbcType=BIGINT}, #{status,jdbcType=SMALLINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.po.AccountUser">
+    insert into account_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="userPhone != null">
+        user_phone,
+      </if>
+      <if test="userEmail != null">
+        user_email,
+      </if>
+      <if test="userPwd != null">
+        user_pwd,
+      </if>
+      <if test="pwdSalt != null">
+        pwd_salt,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createIp != null">
+        create_ip,
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time,
+      </if>
+      <if test="lastLoginIp != null">
+        last_login_ip,
+      </if>
+      <if test="loginTimes != null">
+        login_times,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null">
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userEmail != null">
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null">
+        #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdSalt != null">
+        #{pwdSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createIp != null">
+        #{createIp,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginTimes != null">
+        #{loginTimes,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.po.AccountUser">
+    update account_user
+    <set>
+      <if test="userEmail != null">
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userPwd != null">
+        user_pwd = #{userPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="pwdSalt != null">
+        pwd_salt = #{pwdSalt,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createIp != null">
+        create_ip = #{createIp,jdbcType=VARCHAR},
+      </if>
+      <if test="lastLoginTime != null">
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastLoginIp != null">
+        last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      </if>
+      <if test="loginTimes != null">
+        login_times = #{loginTimes,jdbcType=BIGINT},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=BIGINT}
+      and user_name = #{userName,jdbcType=VARCHAR}
+      and user_phone = #{userPhone,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.po.AccountUser">
+    update account_user
+    set user_email = #{userEmail,jdbcType=VARCHAR},
+      user_pwd = #{userPwd,jdbcType=VARCHAR},
+      pwd_salt = #{pwdSalt,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      create_ip = #{createIp,jdbcType=VARCHAR},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      last_login_ip = #{lastLoginIp,jdbcType=VARCHAR},
+      login_times = #{loginTimes,jdbcType=BIGINT},
+      status = #{status,jdbcType=SMALLINT}
+    where uid = #{uid,jdbcType=BIGINT}
+      and user_name = #{userName,jdbcType=VARCHAR}
+      and user_phone = #{userPhone,jdbcType=VARCHAR}
+  </update>
+</mapper>

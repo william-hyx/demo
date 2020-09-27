@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.AccountPlatformDAO">
+  <resultMap id="BaseResultMap" type="com.example.demo.po.AccountPlatform">
+    <id column="pid" jdbcType="BIGINT" property="pid" />
+    <result column="uid" jdbcType="BIGINT" property="uid" />
+    <result column="platform_token" jdbcType="VARCHAR" property="platformToken" />
+    <result column="platform_type" jdbcType="SMALLINT" property="platformType" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    pid, uid, platform_token, platform_type, nickname, avatar, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from account_platform
+    where pid = #{pid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from account_platform
+    where pid = #{pid,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.po.AccountPlatform">
+    insert into account_platform (pid, uid, platform_token,
+      platform_type, nickname, avatar, 
+      create_time, update_time)
+    values (#{pid,jdbcType=BIGINT}, #{uid,jdbcType=BIGINT}, #{platformToken,jdbcType=VARCHAR}, 
+      #{platformType,jdbcType=SMALLINT}, #{nickname,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.po.AccountPlatform">
+    insert into account_platform
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        pid,
+      </if>
+      <if test="uid != null">
+        uid,
+      </if>
+      <if test="platformToken != null">
+        platform_token,
+      </if>
+      <if test="platformType != null">
+        platform_type,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="avatar != null">
+        avatar,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="pid != null">
+        #{pid,jdbcType=BIGINT},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="platformToken != null">
+        #{platformToken,jdbcType=VARCHAR},
+      </if>
+      <if test="platformType != null">
+        #{platformType,jdbcType=SMALLINT},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.po.AccountPlatform">
+    update account_platform
+    <set>
+      <if test="uid != null">
+        uid = #{uid,jdbcType=BIGINT},
+      </if>
+      <if test="platformToken != null">
+        platform_token = #{platformToken,jdbcType=VARCHAR},
+      </if>
+      <if test="platformType != null">
+        platform_type = #{platformType,jdbcType=SMALLINT},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null">
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where pid = #{pid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.po.AccountPlatform">
+    update account_platform
+    set uid = #{uid,jdbcType=BIGINT},
+      platform_token = #{platformToken,jdbcType=VARCHAR},
+      platform_type = #{platformType,jdbcType=SMALLINT},
+      nickname = #{nickname,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where pid = #{pid,jdbcType=BIGINT}
+  </update>
+</mapper>

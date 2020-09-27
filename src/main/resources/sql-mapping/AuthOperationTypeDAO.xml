@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.dao.AuthOperationTypeDAO">
+  <resultMap id="BaseResultMap" type="com.example.demo.po.AuthOperationType">
+    <id column="operation_type" jdbcType="VARCHAR" property="operationType" />
+    <result column="operation_type_name" jdbcType="VARCHAR" property="operationTypeName" />
+    <result column="operation_type_desc" jdbcType="VARCHAR" property="operationTypeDesc" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    operation_type, operation_type_name, operation_type_desc
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from auth_operation_type
+    where operation_type = #{operationType,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from auth_operation_type
+    where operation_type = #{operationType,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.example.demo.po.AuthOperationType">
+    insert into auth_operation_type (operation_type, operation_type_name,
+      operation_type_desc)
+    values (#{operationType,jdbcType=VARCHAR}, #{operationTypeName,jdbcType=VARCHAR}, 
+      #{operationTypeDesc,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.example.demo.po.AuthOperationType">
+    insert into auth_operation_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="operationType != null">
+        operation_type,
+      </if>
+      <if test="operationTypeName != null">
+        operation_type_name,
+      </if>
+      <if test="operationTypeDesc != null">
+        operation_type_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="operationType != null">
+        #{operationType,jdbcType=VARCHAR},
+      </if>
+      <if test="operationTypeName != null">
+        #{operationTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationTypeDesc != null">
+        #{operationTypeDesc,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.example.demo.po.AuthOperationType">
+    update auth_operation_type
+    <set>
+      <if test="operationTypeName != null">
+        operation_type_name = #{operationTypeName,jdbcType=VARCHAR},
+      </if>
+      <if test="operationTypeDesc != null">
+        operation_type_desc = #{operationTypeDesc,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where operation_type = #{operationType,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.example.demo.po.AuthOperationType">
+    update auth_operation_type
+    set operation_type_name = #{operationTypeName,jdbcType=VARCHAR},
+      operation_type_desc = #{operationTypeDesc,jdbcType=VARCHAR}
+    where operation_type = #{operationType,jdbcType=VARCHAR}
+  </update>
+</mapper>
