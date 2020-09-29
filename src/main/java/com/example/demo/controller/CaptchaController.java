@@ -7,11 +7,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * @description:
@@ -28,7 +30,7 @@ public class CaptchaController {
     @ApiOperation(value = "获取图形验证码", notes = "获取图形验证码")
     @GetMapping(value = "/imagecaptcha")
     public void getImageCaptcha(@ApiParam(name = "type", value = "图形验证码类型", defaultValue = "nl") String type,
-                                HttpServletResponse response) throws IOException {
+                                HttpServletResponse response) throws Exception {
         response.setContentType("image/jpeg");
         response.setDateHeader("expries", -1);
         response.setHeader("Cache-Control", "no-cache");
@@ -36,7 +38,7 @@ public class CaptchaController {
         if (StringUtils.isBlank(type)) {
             type = "nl";
         }
-        ImageCaptcha imageCaptcha = ImageCaptchaUtil.drawImage(type, null, null);
+        ImageCaptcha imageCaptcha = ImageCaptchaUtil.drawImage(type);
         ImageIO.write(imageCaptcha.getImage(), "jpg", response.getOutputStream());
     }
 }

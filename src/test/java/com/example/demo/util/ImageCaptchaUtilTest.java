@@ -9,10 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ImageCaptchaUtilTest {
 
     @Test
-    void drawImage() {
-        ImageCaptchaUtil.drawImage("ch", null, null);
-        ImageCaptchaUtil.drawImage("nl", null, null);
-        ImageCaptchaUtil.drawImage("n", null, null);
-        ImageCaptchaUtil.drawImage("l", null, null);
+    void drawImage() throws Exception{
+        ImageCaptchaUtil.drawImage("ch");
+        ImageCaptchaUtil.drawImage("nl");
+        ImageCaptchaUtil.drawImage("n");
+        ImageCaptchaUtil.drawImage("l");
     }
 }

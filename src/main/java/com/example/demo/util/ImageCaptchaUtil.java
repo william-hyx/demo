@@ -45,11 +45,11 @@ public class ImageCaptchaUtil {
      *
      * @param g
      */
-    private static void drawRandomLine(Graphics g, int width, int height) {
+    private static void drawRandomLine(Graphics g, int lineCount, int width, int height) {
         // 设置颜色
         g.setColor(Color.GREEN);
         // 设置线条个数并画线
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < lineCount; i++) {
             int x1 = new Random().nextInt(width);
             int y1 = new Random().nextInt(height);
             int x2 = new Random().nextInt(width);
@@ -66,7 +66,7 @@ public class ImageCaptchaUtil {
      * @return String... createTypeFlag是可变参数，
      * Java1.5增加了新特性：可变参数：适用于参数个数不确定，类型确定的情况，java把可变参数当做数组处理。注意：可变参数必须位于最后一项
      */
-    private static String drawRandomNum(Graphics2D g, String... createTypeFlag) {
+    private static String drawRandomNum(Graphics2D g, int codeCount, String... createTypeFlag) {
         // 设置颜色
         g.setColor(Color.RED);
         // 设置字体
@@ -83,20 +83,20 @@ public class ImageCaptchaUtil {
         if (createTypeFlag.length > 0 && null != createTypeFlag[0]) {
             if (createTypeFlag[0].equals("ch")) {
                 // 截取汉字
-                return createRandomChar(g, baseChineseChar);
+                return createRandomChar(g, baseChineseChar, codeCount);
             } else if (createTypeFlag[0].equals("nl")) {
                 // 截取数字和字母的组合
-                return createRandomChar(g, baseNumLetter);
+                return createRandomChar(g, baseNumLetter, codeCount);
             } else if (createTypeFlag[0].equals("n")) {
                 // 截取数字
-                return createRandomChar(g, baseNum);
+                return createRandomChar(g, baseNum, codeCount);
             } else if (createTypeFlag[0].equals("l")) {
                 // 截取字母
-                return createRandomChar(g, baseLetter);
+                return createRandomChar(g, baseLetter, codeCount);
             }
         } else {
             // 默认截取数字和字母的组合
-            return createRandomChar(g, baseNumLetter);
+            return createRandomChar(g, baseNumLetter, codeCount);
         }
 
         return "";
@@ -109,12 +109,12 @@ public class ImageCaptchaUtil {
      * @param baseChar
      * @return 随机字符
      */
-    private static String createRandomChar(Graphics2D g, String baseChar) {
+    private static String createRandomChar(Graphics2D g, String baseChar, int codeCount) {
         StringBuffer sb = new StringBuffer();
         int x = 5;
         String ch = "";
         // 控制字数
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < codeCount; i++) {
             // 设置字体旋转角度
             int degree = new Random().nextInt() % 30;
             ch = baseChar.charAt(new Random().nextInt(baseChar.length())) + "";
@@ -131,16 +131,15 @@ public class ImageCaptchaUtil {
 
     /**
      * @param typeFlag: ch中文,nl数字和字母组合, n纯数字,l纯字母
+     * @param codeCount: 字母个数
+     * @param lineCount: 干扰线个数
      * @param width:    图片宽度
      * @param height:   图片高度
      * @return
      */
-    public static ImageCaptcha drawImage(String typeFlag, Integer width, Integer height) {
-        if (width == null) {
-            width = 120;
-        }
-        if (height == null) {
-            height = 30;
+    public static ImageCaptcha drawImage(String typeFlag, Integer codeCount, Integer lineCount, Integer width, Integer height) throws Exception {
+        if (codeCount == null || width == null || height == null) {
+            throw new Exception("缺少参数");
         }
         //1.在内存中创建一张图片
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
@@ -151,13 +150,72 @@ public class ImageCaptchaUtil {
         //4.设置图片的边框
         setBorder(g, width, height);
         //5.在图片上画干扰线
-        drawRandomLine(g, width, height);
+        drawRandomLine(g, lineCount, width, height);
         //6.写在图片上随机数
         //根据客户端传递的createTypeFlag标识生成验证码图片
-        String random = StringUtils.lowerCase(drawRandomNum((Graphics2D) g, typeFlag));
+        String random = StringUtils.lowerCase(drawRandomNum((Graphics2D) g, codeCount, typeFlag));
         ImageCaptcha imageCaptcha = new ImageCaptcha();
         imageCaptcha.setContent(random);
         imageCaptcha.setImage(bi);
         return imageCaptcha;
     }
+
+
+    public static ImageCaptcha drawImage(String typeFlag) throws Exception {
+        return drawImage(typeFlag, 4, 5, 120, 30);
+    }
+
+    public static ImageCaptcha drawImageWithDefaultCodeCountAndLineCount(String typeFlag, Integer width, Integer height) throws Exception {
+        return drawImage(typeFlag, 4, 5, width, height);
+    }
+
+    public static ImageCaptcha drawImageWithDefaultLineCountAndSize(String typeFlag, Integer codeCount) throws Exception {
+        return drawImageWithDefaultSize(typeFlag, codeCount, 5);
+    }
+
+    public static ImageCaptcha drawImageWithDefaultCodeCountAndSize(String typeFlag, Integer lineCount) throws Exception {
+        return drawImageWithDefaultSize(typeFlag, 4, lineCount);
+    }
+
+
+    public static ImageCaptcha drawImageWithDefaultSize(String typeFlag, Integer codeCount, Integer lineCount) throws Exception {
+        return drawImage(typeFlag, codeCount, lineCount, 120, 30);
+    }
+
+    /**
+     * 中文图形验证码
+     * @return
+     * @throws Exception
+     */
+    public static ImageCaptcha drawChineseImage() throws Exception {
+        return drawImage("ch", 4, 5, 120, 30);
+    }
+
+    /**
+     * 数字和字母验证码
+     * @return
+     * @throws Exception
+     */
+    public static ImageCaptcha drawNumberAndLetterImage() throws Exception {
+        return drawImage("nl", 4, 5, 120, 30);
+    }
+
+    /**
+     * 数字验证码
+     * @return
+     * @throws Exception
+     */
+    public static ImageCaptcha drawNumberImage() throws Exception {
+        return drawImage("n", 4, 5, 120, 30);
+    }
+
+    /**
+     * 字母验证码
+     * @return
+     * @throws Exception
+     */
+    public static ImageCaptcha drawLetterImage() throws Exception {
+        return drawImage("l", 4, 5, 120, 30);
+    }
+
 }
