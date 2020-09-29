@@ -30,7 +30,7 @@ public class SwaggerConfiguration {
         Docket docket=new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 //分组名称
-                .groupName("2.X版本")
+                .groupName("1.0")
                 .select()
                 //这里指定Controller扫描包路径
                 .apis(RequestHandlerSelectors.any())
@@ -42,8 +42,8 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("swagger-bootstrap-ui RESTful APIs")
-                .description("swagger-bootstrap-ui")
+                .title("后台接口")
+                .description("后台接口")
                 .version("1.0")
                 .build();
     }

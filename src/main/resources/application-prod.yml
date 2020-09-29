@@ -47,3 +47,6 @@ logging:
 
 mybatis:
   mapper-locations: classpath:sql-mapping/*.xml
+
+knife4j:
+  production: true

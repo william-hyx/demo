@@ -138,9 +138,22 @@
             <artifactId>UserAgentUtils</artifactId>
             <version>1.20</version>
         </dependency>
+
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-spring-boot-starter</artifactId>
+            <!--在引用时请在maven中央仓库搜索最新版本号-->
+            <version>2.0.4</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>guava</artifactId>
+                    <groupId>com.google.guava</groupId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>mapstruct</artifactId>
+                    <groupId>org.mapstruct</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -154,19 +167,14 @@
             <artifactId>commons-pool2</artifactId>
             <version>2.8.1</version>
         </dependency>
-    </dependencies>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.github.xiaoymin</groupId>
-                <artifactId>knife4j-dependencies</artifactId>
-                <version>2.0.2</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+        <dependency>
+            <groupId>javax.validation</groupId>
+            <artifactId>validation-api</artifactId>
+            <version>1.1.0.Final</version>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <resources>
