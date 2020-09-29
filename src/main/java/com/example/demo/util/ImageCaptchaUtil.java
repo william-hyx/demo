@@ -1,7 +1,9 @@
 package com.example.demo.util;
 
 import com.example.demo.domain.ImageCaptcha;
+import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.awt.*;
@@ -15,6 +17,8 @@ import java.util.Random;
  **/
 @Slf4j
 public class ImageCaptchaUtil {
+
+    private static final ImmutableList<String> IMAGECAPTCHATYPE = ImmutableList.of("ch", "nl", "n", "l");
 
     /**
      * 设置图片的背景色
@@ -165,57 +169,9 @@ public class ImageCaptchaUtil {
         return drawImage(typeFlag, 4, 5, 120, 30);
     }
 
-    public static ImageCaptcha drawImageWithDefaultCodeCountAndLineCount(String typeFlag, Integer width, Integer height) throws Exception {
-        return drawImage(typeFlag, 4, 5, width, height);
-    }
-
-    public static ImageCaptcha drawImageWithDefaultLineCountAndSize(String typeFlag, Integer codeCount) throws Exception {
-        return drawImageWithDefaultSize(typeFlag, codeCount, 5);
-    }
-
-    public static ImageCaptcha drawImageWithDefaultCodeCountAndSize(String typeFlag, Integer lineCount) throws Exception {
-        return drawImageWithDefaultSize(typeFlag, 4, lineCount);
-    }
-
-
-    public static ImageCaptcha drawImageWithDefaultSize(String typeFlag, Integer codeCount, Integer lineCount) throws Exception {
-        return drawImage(typeFlag, codeCount, lineCount, 120, 30);
-    }
-
-    /**
-     * 中文图形验证码
-     * @return
-     * @throws Exception
-     */
-    public static ImageCaptcha drawChineseImage() throws Exception {
-        return drawImage("ch", 4, 5, 120, 30);
-    }
-
-    /**
-     * 数字和字母验证码
-     * @return
-     * @throws Exception
-     */
-    public static ImageCaptcha drawNumberAndLetterImage() throws Exception {
-        return drawImage("nl", 4, 5, 120, 30);
-    }
-
-    /**
-     * 数字验证码
-     * @return
-     * @throws Exception
-     */
-    public static ImageCaptcha drawNumberImage() throws Exception {
-        return drawImage("n", 4, 5, 120, 30);
-    }
-
-    /**
-     * 字母验证码
-     * @return
-     * @throws Exception
-     */
-    public static ImageCaptcha drawLetterImage() throws Exception {
-        return drawImage("l", 4, 5, 120, 30);
+    public static ImageCaptcha drawImage() throws Exception {
+        int index = RandomUtils.nextInt(0, 4);
+        return drawImage(IMAGECAPTCHATYPE.get(index), 4, 5, 120, 30);
     }
 
 }
