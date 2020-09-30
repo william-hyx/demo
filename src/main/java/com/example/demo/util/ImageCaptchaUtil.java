@@ -145,6 +145,10 @@ public class ImageCaptchaUtil {
         if (codeCount == null || width == null || height == null) {
             throw new Exception("缺少参数");
         }
+        // 验证码尺寸可控，防止缓冲区攻击
+        if (width > 2000 || height > 2000) {
+            throw new Exception("图片尺寸过大");
+        }
         //1.在内存中创建一张图片
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
         //2.得到图片
@@ -163,7 +167,6 @@ public class ImageCaptchaUtil {
         imageCaptcha.setImage(bi);
         return imageCaptcha;
     }
-
 
     public static ImageCaptcha drawImage(String typeFlag) throws Exception {
         return drawImage(typeFlag, 4, 5, 120, 30);
